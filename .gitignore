@@ -1,0 +1,38 @@
+# === Node.js dependencies ===
+node_modules/
+
+# === Vite/React build output ===
+dist/
+build/
+frontend/build/
+
+# === Logs ===
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === dotenv environment variables ===
+.env
+
+# === VS Code settings ===
+.vscode/
+
+# === Python virtual environments ===
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# === Flask-specific ===
+instance/
+*.db
+*.sqlite
+
+# === System files ===
+.DS_Store
+Thumbs.db
+
+# === Editor/backup files ===
+*.bak
+*.swp
+*.swo
