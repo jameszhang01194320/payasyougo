@@ -15,7 +15,7 @@ function NotFound() {
             }
         }, 1000);
 
-        return () => clearInterval(count);  // clean timer
+        return () => clearInterval(count);  // 清除计时器
     }, [countDown, navigate]);
 
     return (

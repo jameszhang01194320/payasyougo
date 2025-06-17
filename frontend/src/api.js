@@ -1,45 +1,45 @@
-// frontend/src/api.js (or api/index.js)
+// frontend/src/api.js (或 api/index.js)
 
 import axios from 'axios';
 
-// Create an Axios instance
+// 创建一个 Axios 实例
 const api = axios.create({
-  // **Core change: update baseURL to point to your Django backend API address**
-  baseURL: 'http://127.0.0.1:8000/api/', // <-- Make sure this is port 8000 with the /api/ prefix
+  // **核心修改：更改 baseURL 以指向你的 Django 后端 API 地址**
+  baseURL: 'http://127.0.0.1:8000/api/', // <-- 确保这里是 8000 端口，且有 /api/ 前缀
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Add a request interceptor to automatically attach the auth token to each request
+// 添加请求拦截器，用于在每个请求中自动附加认证 Token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('access_token'); // Retrieve token from localStorage
+    const token = localStorage.getItem('access_token'); // 从 localStorage 获取 Token
 
     if (token) {
-      // If token exists, add it to the Authorization header
-      config.headers.Authorization = `Token ${token}`; // Note the space after 'Token '
+      // 如果 Token 存在，将其添加到 Authorization 头中
+      config.headers.Authorization = `Token ${token}`; // 注意 'Token ' 后面有一个空格
     }
     return config;
   },
   (error) => {
-    // Handle request error
+    // 处理请求错误
     return Promise.reject(error);
   }
 );
 
-// (Optional) Add a response interceptor to handle global 401 Unauthorized errors
+// （可选）添加响应拦截器，用于处理全局的 401 Unauthorized 错误
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // If 401 Unauthorized is received, it means the token may be expired or invalid
-      // Clear local token and redirect to login page
+      // 如果收到 401 Unauthorized，意味着 Token 可能过期或无效
+      // 清除本地 Token 并重定向到登录页面
       localStorage.removeItem('access_token');
-      localStorage.removeItem('user_id'); // If you store user_id
-      // Since navigate can't be accessed directly here, use a global redirect mechanism
-      // For example, handle 401 and redirect in App.jsx or AuthContext
-      window.location.href = '/login'; // A blunt but effective redirect method
+      localStorage.removeItem('user_id'); // 如果你存储了 user_id
+      // 由于这里不能直接访问 navigate，你可能需要一个全局的重定向机制
+      // 例如，在 App.jsx 或 AuthContext 中处理 401 错误并重定向
+      window.location.href = '/login'; // 粗暴但有效的重定向方式
     }
     return Promise.reject(error);
   }

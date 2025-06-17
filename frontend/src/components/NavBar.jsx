@@ -21,12 +21,12 @@ function NavBar({ isLoggedIn, onLogout }) {
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ms-auto">
 
-            {/* Public pages */}
+            {/* 公共页面 */}
             <Nav.Link as={NavLink} to="/" end>
               Home
             </Nav.Link>
 
-            {/* Pages visible only to logged-in users */}
+            {/* 登录用户才可见的页面 */}
             {isLoggedIn && (
               <>
                 <Nav.Link as={NavLink} to="/invoices" end>
@@ -47,14 +47,14 @@ function NavBar({ isLoggedIn, onLogout }) {
               </>
             )}
 
-            {/* Register visible only to users not logged in */}
+            {/* 注册仅未登录用户可见 */}
             {!isLoggedIn && (
               <Nav.Link as={NavLink} to="/register" end>
                 Register
               </Nav.Link>
             )}
 
-            {/* Login / Logout */}
+            {/* 登录/登出 */}
             {isLoggedIn ? (
               <Nav.Link onClick={handleLogoutClick} style={{ cursor: 'pointer' }}>
                 Logout
